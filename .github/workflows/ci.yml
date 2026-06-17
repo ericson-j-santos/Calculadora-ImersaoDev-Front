@@ -1,0 +1,80 @@
+name: CI - Qualidade e Segurança
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validacao-basica:
+    name: Validação básica
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout seguro
+        uses: actions/checkout@v4
+
+      - name: Validar index.html
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ ! -f "index.html" ]; then
+            echo "::error::index.html não encontrado na raiz."
+            exit 1
+          fi
+
+      - name: Validar arquivos proibidos
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          arquivos_proibidos=(
+            ".env"
+            ".env.local"
+            ".env.production"
+            "credentials.json"
+            "database.sqlite"
+            "database.db"
+            "*.pem"
+            "*.key"
+          )
+
+          for padrao in "${arquivos_proibidos[@]}"; do
+            if find . -name "$padrao" -not -path "./.git/*" -print -quit | grep -q .; then
+              echo "::error::Arquivo proibido encontrado pelo padrão: $padrao"
+              exit 1
+            fi
+          done
+
+      - name: Validar padrões sensíveis em código publicado
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          arquivos=$(find . \
+            -type f \
+            -not -path "./.git/*" \
+            -not -path "./.github/*" \
+            -not -path "./docs/*" \
+            -not -name "SECURITY.md" \
+            -not -name "CHANGELOG.md" \
+            -not -name "README.md")
+
+          if [ -z "$arquivos" ]; then
+            echo "Nenhum arquivo de aplicação para validar."
+            exit 0
+          fi
+
+          if grep -InE "(API_KEY|ACCESS_TOKEN|CLIENT_SECRET|PASSWORD|DATABASE_URL|connectionString|PRIVATE_KEY|BEGIN RSA PRIVATE KEY)" $arquivos; then
+            echo "::error::Possível segredo encontrado em arquivo publicado."
+            exit 1
+          fi
+
+          echo "OK - Nenhum padrão sensível identificado nos arquivos publicados."
