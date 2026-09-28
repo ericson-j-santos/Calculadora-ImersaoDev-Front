@@ -1,0 +1,90 @@
+name: IA que Trabalha - Buffer DCR Native Probe
+
+on:
+  push:
+    branches:
+      - ops/ia-que-trabalha-buffer
+    paths:
+      - 'ia-que-trabalha/oauth/native-probe-request.json'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Probe standard native DCR without secrets
+        shell: python
+        run: |
+          import json
+          import urllib.error
+          import urllib.request
+
+          payloads = [
+              {
+                  "label": "native-minimal",
+                  "body": {
+                      "client_name": "IA que Trabalha MCP Probe",
+                      "redirect_uris": ["http://127.0.0.1:8765/callback"],
+                      "grant_types": ["authorization_code", "refresh_token"],
+                      "response_types": ["code"],
+                      "token_endpoint_auth_method": "none",
+                      "application_type": "native"
+                  }
+              },
+              {
+                  "label": "native-with-scope",
+                  "body": {
+                      "client_name": "IA que Trabalha MCP Probe",
+                      "redirect_uris": ["http://127.0.0.1:8765/callback"],
+                      "grant_types": ["authorization_code", "refresh_token"],
+                      "response_types": ["code"],
+                      "token_endpoint_auth_method": "none",
+                      "application_type": "native",
+                      "scope": "account:read posts:read posts:write offline_access"
+                  }
+              }
+          ]
+
+          for case in payloads:
+              req = urllib.request.Request(
+                  "https://auth.buffer.com/reg",
+                  data=json.dumps(case["body"]).encode("utf-8"),
+                  method="POST",
+                  headers={
+                      "Content-Type": "application/json",
+                      "Accept": "application/json",
+                      "User-Agent": "ia-que-trabalha-dcr-probe/1.0"
+                  },
+              )
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as response:
+                      data = json.loads(response.read().decode("utf-8"))
+                      print(json.dumps({
+                          "case": case["label"],
+                          "status": response.status,
+                          "registered": bool(data.get("client_id")),
+                          "client_secret_returned": bool(data.get("client_secret")),
+                          "redirect_uris": data.get("redirect_uris"),
+                          "grant_types": data.get("grant_types"),
+                          "response_types": data.get("response_types"),
+                          "token_endpoint_auth_method": data.get("token_endpoint_auth_method")
+                      }, sort_keys=True))
+              except urllib.error.HTTPError as exc:
+                  body = exc.read().decode("utf-8", errors="replace")
+                  try:
+                      error = json.loads(body)
+                  except Exception:
+                      error = {"raw": body[:300]}
+                  print(json.dumps({
+                      "case": case["label"],
+                      "status": exc.code,
+                      "registered": False,
+                      "error": error.get("error"),
+                      "error_description": error.get("error_description")
+                  }, sort_keys=True))
