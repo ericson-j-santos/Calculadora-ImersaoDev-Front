@@ -1,0 +1,6 @@
+{
+  "action": "publish-buffer",
+  "correlation_id": "iaqt-buffer-public-smoke-20260928-02",
+  "requested_by": "chat",
+  "expected": "blocked_without_secret"
+}
