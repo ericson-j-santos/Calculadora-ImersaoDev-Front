@@ -1,0 +1,83 @@
+name: IA que Trabalha - Buffer Native HTTPS DCR Probe
+
+on:
+  push:
+    branches:
+      - ops/ia-que-trabalha-buffer
+    paths:
+      - 'ia-que-trabalha/oauth/https-native-probe-request.json'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Probe native client with HTTPS redirect
+        shell: python
+        run: |
+          import json
+          import urllib.error
+          import urllib.request
+
+          cases = [
+            {
+              "label": "native-https",
+              "body": {
+                "client_name": "IA que Trabalha Native HTTPS Probe",
+                "redirect_uris": ["https://example.com/oauth/callback"],
+                "grant_types": ["authorization_code", "refresh_token"],
+                "response_types": ["code"],
+                "token_endpoint_auth_method": "none",
+                "application_type": "native"
+              }
+            },
+            {
+              "label": "native-https-with-scope",
+              "body": {
+                "client_name": "IA que Trabalha Native HTTPS Probe",
+                "redirect_uris": ["https://example.com/oauth/callback"],
+                "grant_types": ["authorization_code", "refresh_token"],
+                "response_types": ["code"],
+                "token_endpoint_auth_method": "none",
+                "application_type": "native",
+                "scope": "account:read posts:read posts:write offline_access"
+              }
+            }
+          ]
+
+          for case in cases:
+              req = urllib.request.Request(
+                  "https://auth.buffer.com/reg",
+                  data=json.dumps(case["body"]).encode("utf-8"),
+                  method="POST",
+                  headers={
+                    "Content-Type":"application/json",
+                    "Accept":"application/json",
+                    "User-Agent":"iaqt-native-https-probe/1.0"
+                  }
+              )
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as response:
+                      data=json.loads(response.read().decode("utf-8"))
+                      print(json.dumps({
+                        "case":case["label"],
+                        "status":response.status,
+                        "registered":bool(data.get("client_id")),
+                        "client_secret_returned":bool(data.get("client_secret")),
+                        "redirect_uris":data.get("redirect_uris"),
+                        "application_type":data.get("application_type")
+                      },sort_keys=True))
+              except urllib.error.HTTPError as exc:
+                  raw=exc.read().decode("utf-8",errors="replace")
+                  try: data=json.loads(raw)
+                  except Exception: data={"raw":raw[:300]}
+                  print(json.dumps({
+                    "case":case["label"],
+                    "status":exc.code,
+                    "registered":False,
+                    "error":data.get("error"),
+                    "error_description":data.get("error_description")
+                  },sort_keys=True))
