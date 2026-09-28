@@ -1,0 +1,30 @@
+{
+  "schema_version": "1",
+  "brand": "IA que Trabalha",
+  "slogan": "Menos tarefa. Mais resultado.",
+  "public_identity": "devtieri",
+  "accounts": {
+    "instagram": {
+      "target_handle": "devtieri",
+      "account_model": "existing_professional_account",
+      "personal_profile_allowed": false,
+      "connection_status": "pending_auth"
+    },
+    "youtube": {
+      "target_handle": "devtieri",
+      "display_name": "IA que Trabalha",
+      "account_model": "new_brand_channel",
+      "owner_google_account_is_private": true,
+      "personal_channel_allowed": false,
+      "connection_status": "pending_channel_creation"
+    },
+    "tiktok": {
+      "target_handle": "devtieri",
+      "display_name": "IA que Trabalha",
+      "account_model": "new_separate_account",
+      "personal_account_allowed": false,
+      "connection_status": "pending_account_creation",
+      "requires_distinct_login_identity": true
+    }
+  }
+}
