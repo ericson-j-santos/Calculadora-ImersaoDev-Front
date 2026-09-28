@@ -1,0 +1,70 @@
+name: IA que Trabalha - Buffer Zero Cost
+
+on:
+  push:
+    branches:
+      - ops/ia-que-trabalha-buffer
+    paths:
+      - 'ia-que-trabalha/trigger/request.json'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ia-que-trabalha-buffer-zero-cost
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+      BUFFER_EXPECTED_USERNAME: devtieri
+
+    steps:
+      - name: Checkout exact trigger branch
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+
+      - name: Validate trigger payload
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+
+          path = Path("ia-que-trabalha/trigger/request.json")
+          payload = json.loads(path.read_text(encoding="utf-8"))
+          if payload.get("action") != "publish-buffer":
+              raise SystemExit("invalid_action")
+          if not payload.get("correlation_id"):
+              raise SystemExit("missing_correlation_id")
+          print("trigger_valid=true")
+          print("correlation_id=" + str(payload["correlation_id"]))
+
+      - name: Detect Buffer credential
+        id: buffer
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+
+          configured = bool(os.environ.get("BUFFER_API_KEY", "").strip())
+          with Path(os.environ["GITHUB_OUTPUT"]).open("a", encoding="utf-8") as handle:
+              handle.write(f"configured={'true' if configured else 'false'}\n")
+          print("buffer_config=configured" if configured else "buffer_config=missing_secret")
+
+      - name: Schedule and independently verify week
+        if: steps.buffer.outputs.configured == 'true'
+        run: python ia-que-trabalha/src/publish_buffer.py
+
+      - name: Record fail-closed state
+        if: steps.buffer.outputs.configured != 'true'
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+
+          with Path(os.environ["GITHUB_STEP_SUMMARY"]).open("a", encoding="utf-8") as handle:
+              handle.write("### IA que Trabalha — blocked safely\n\n")
+              handle.write("BUFFER_API_KEY is not configured. No Buffer or Instagram write was attempted.\n")
+          print("publication_attempted=false")
