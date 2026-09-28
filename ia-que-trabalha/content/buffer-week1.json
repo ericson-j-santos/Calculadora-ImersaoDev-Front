@@ -1,0 +1,79 @@
+[
+  {
+    "id": "2026-09-29-excel",
+    "destination": "instagram",
+    "format": "REEL",
+    "timezone": "America/Sao_Paulo",
+    "publish_at_local": "2026-09-29T08:30:00-03:00",
+    "media_url": "https://raw.githubusercontent.com/ericson-j-santos/static-website/ia-que-trabalha-media-e2e-20260928/ia-que-trabalha/2026-09-29-excel.mp4",
+    "caption": "Organizar informações manualmente pode tomar muito tempo. Uma IA pode ajudar a transformar uma lista bagunçada em tabela. Antes de usar, confira os dados com a fonte original.\n\nSalve para testar na próxima planilha.\n\n#inteligenciaartificial #excel #produtividade #automacao",
+    "ai_generated": true,
+    "status": "ready_to_schedule"
+  },
+  {
+    "id": "2026-09-30-pdf",
+    "destination": "instagram",
+    "format": "REEL",
+    "timezone": "America/Sao_Paulo",
+    "publish_at_local": "2026-09-30T08:30:00-03:00",
+    "media_url": "https://raw.githubusercontent.com/ericson-j-santos/static-website/ia-que-trabalha-media-e2e-20260928/ia-que-trabalha/2026-09-30-pdf.mp4",
+    "caption": "Documentos com informações repetidas podem ser organizados com ajuda de IA. O passo mais importante continua sendo conferir o resultado com o documento original.\n\nEnvie para quem vive copiando dados de PDF.\n\n#pdf #excel #ia #produtividade",
+    "ai_generated": true,
+    "status": "ready_to_schedule"
+  },
+  {
+    "id": "2026-10-01-repeticao",
+    "destination": "instagram",
+    "format": "REEL",
+    "timezone": "America/Sao_Paulo",
+    "publish_at_local": "2026-10-01T08:30:00-03:00",
+    "media_url": "https://raw.githubusercontent.com/ericson-j-santos/static-website/ia-que-trabalha-media-e2e-20260928/ia-que-trabalha/2026-10-01-repeticao.mp4",
+    "caption": "Automação pode começar com algo simples. Procure tarefas frequentes, repetitivas e com passos claros. Elas costumam ser as melhores candidatas.\n\nComente 1, 2 ou 3.\n\n#automacao #trabalho #produtividade #ia",
+    "ai_generated": true,
+    "status": "ready_to_schedule"
+  },
+  {
+    "id": "2026-10-02-antes-depois",
+    "destination": "instagram",
+    "format": "REEL",
+    "timezone": "America/Sao_Paulo",
+    "publish_at_local": "2026-10-02T08:30:00-03:00",
+    "media_url": "https://raw.githubusercontent.com/ericson-j-santos/static-website/ia-que-trabalha-media-e2e-20260928/ia-que-trabalha/2026-10-02-antes-depois.mp4",
+    "caption": "Uma boa automação não precisa tirar pessoas do processo. Ela pode apenas reduzir etapas repetitivas e deixar a pessoa focada na conferência e nas decisões.\n\nProcure uma tarefa repetitiva no seu dia.\n\n#automacao #inteligenciaartificial #trabalho #produtividade",
+    "ai_generated": true,
+    "status": "ready_to_schedule"
+  },
+  {
+    "id": "2026-10-03-reuniao",
+    "destination": "instagram",
+    "format": "REEL",
+    "timezone": "America/Sao_Paulo",
+    "publish_at_local": "2026-10-03T08:30:00-03:00",
+    "media_url": "https://raw.githubusercontent.com/ericson-j-santos/static-website/ia-que-trabalha-media-e2e-20260928/ia-que-trabalha/2026-10-03-reuniao.mp4",
+    "caption": "Anotações de reunião podem virar uma lista simples de decisões e tarefas. Inclua no pedido: não invente informações que não estejam no texto. Depois, confira o resultado.\n\nSalve para a próxima reunião.\n\n#reuniao #produtividade #ia #trabalho",
+    "ai_generated": true,
+    "status": "ready_to_schedule"
+  },
+  {
+    "id": "2026-10-04-documentos",
+    "destination": "instagram",
+    "format": "REEL",
+    "timezone": "America/Sao_Paulo",
+    "publish_at_local": "2026-10-04T08:30:00-03:00",
+    "media_url": "https://raw.githubusercontent.com/ericson-j-santos/static-website/ia-que-trabalha-media-e2e-20260928/ia-que-trabalha/2026-10-04-documentos.mp4",
+    "caption": "Comparar documentos é um bom uso de IA: ela ajuda a encontrar rapidamente onde houve mudança. A validação final deve ser feita nos documentos originais.\n\nEnvie para quem compara versões de documentos.\n\n#documentos #ia #produtividade #trabalho",
+    "ai_generated": true,
+    "status": "ready_to_schedule"
+  },
+  {
+    "id": "2026-10-05-verificacao",
+    "destination": "instagram",
+    "format": "REEL",
+    "timezone": "America/Sao_Paulo",
+    "publish_at_local": "2026-10-05T08:30:00-03:00",
+    "media_url": "https://raw.githubusercontent.com/ericson-j-santos/static-website/ia-que-trabalha-media-e2e-20260928/ia-que-trabalha/2026-10-05-verificacao.mp4",
+    "caption": "Uma resposta bem escrita não prova que a informação está correta. Para algo importante, peça a fonte, abra a fonte original e confira a data antes de usar.\n\nCompartilhe. Esse hábito evita muitos erros.\n\n#inteligenciaartificial #ia #seguranca #produtividade",
+    "ai_generated": true,
+    "status": "ready_to_schedule"
+  }
+]
