@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 YOUTUBE = ROOT / "content" / "youtube-week1.json"
 TIKTOK = ROOT / "content" / "tiktok-week1.json"
+IDENTITIES = ROOT / "content" / "platform-identities.json"
 
 
 def load(path):
@@ -52,6 +53,17 @@ class CrossPlatformWeek1Tests(unittest.TestCase):
             self.assertEqual("PUBLIC_TO_EVERYONE", item["privacy"])
             self.assertTrue(item["ai_generated"])
             self.assertEqual("ready_to_connect", item["status"])
+
+    def test_public_identity_is_devtieri_and_personal_profiles_are_blocked(self):
+        cfg = load(IDENTITIES)
+        self.assertEqual("devtieri", cfg["public_identity"])
+        self.assertEqual("devtieri", cfg["accounts"]["instagram"]["target_handle"])
+        self.assertEqual("devtieri", cfg["accounts"]["youtube"]["target_handle"])
+        self.assertEqual("devtieri", cfg["accounts"]["tiktok"]["target_handle"])
+        self.assertFalse(cfg["accounts"]["youtube"]["personal_channel_allowed"])
+        self.assertFalse(cfg["accounts"]["tiktok"]["personal_account_allowed"])
+        self.assertEqual("new_brand_channel", cfg["accounts"]["youtube"]["account_model"])
+        self.assertEqual("new_separate_account", cfg["accounts"]["tiktok"]["account_model"])
 
     def test_negative_control_rejects_non_https_media(self):
         sample = dict(load(YOUTUBE)[0])
