@@ -1,0 +1,9 @@
+{
+  "source_repository": "ericson-j-santos/diversos",
+  "source_head_sha": "d6e258040b408ea53e9fa74416e85abefcf08a11",
+  "files": {
+    "apps/ia-que-trabalha/content/youtube-week1.json": "b1e82c5d32de265d26c728332f7bcf6f834b22bf",
+    "apps/ia-que-trabalha/content/tiktok-week1.json": "dd2ea8ebde315d662260e4b8a9d71e0e15e816f9",
+    "apps/ia-que-trabalha/tests/test_cross_platform_week1.py": "04c5690485e49a0b3aeb79cd5ee04d1647a5ebf8"
+  }
+}
