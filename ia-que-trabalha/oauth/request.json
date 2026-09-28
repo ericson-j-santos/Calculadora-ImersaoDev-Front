@@ -1,7 +1,0 @@
-{
-  "action": "oauth-and-schedule-buffer",
-  "correlation_id": "iaqt-buffer-oauth-20260928-02",
-  "requested_by": "chat",
-  "target": "instagram:devtieri",
-  "expected_posts": 7
-}
