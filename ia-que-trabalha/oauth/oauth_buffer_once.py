@@ -214,10 +214,12 @@ def main() -> int:
             REGISTER_URL,
             {
                 "client_name": "IA que Trabalha - sessão efêmera",
+                "client_uri": "https://github.com/ericson-j-santos/Calculadora-ImersaoDev-Front",
                 "redirect_uris": [redirect_uri],
                 "grant_types": ["authorization_code", "refresh_token"],
                 "response_types": ["code"],
                 "token_endpoint_auth_method": "none",
+                "application_type": "web",
                 "scope": SCOPES,
             },
         )
