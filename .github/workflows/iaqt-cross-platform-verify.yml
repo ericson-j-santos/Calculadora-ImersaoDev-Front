@@ -44,6 +44,7 @@ jobs:
           mapping = {
               "apps/ia-que-trabalha/content/youtube-week1.json": "iaqt-verify/content/youtube-week1.json",
               "apps/ia-que-trabalha/content/tiktok-week1.json": "iaqt-verify/content/tiktok-week1.json",
+              "apps/ia-que-trabalha/content/platform-identities.json": "iaqt-verify/content/platform-identities.json",
               "apps/ia-que-trabalha/tests/test_cross_platform_week1.py": "iaqt-verify/tests/test_cross_platform_week1.py",
           }
           for source, target in mapping.items():
